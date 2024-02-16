@@ -20,7 +20,7 @@ public class User {
         this.id = id;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
@@ -28,7 +28,7 @@ public class User {
         this.name = name;
     }
 
-    public String email() {
+    public String getEmail() {
         return email;
     }
 
@@ -36,7 +36,7 @@ public class User {
         this.email = email;
     }
 
-    public String password() {
+    public String getPassword() {
         return password;
     }
 
