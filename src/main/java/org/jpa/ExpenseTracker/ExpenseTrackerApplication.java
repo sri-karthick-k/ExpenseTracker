@@ -10,16 +10,7 @@ import java.util.List;
 public class ExpenseTrackerApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext ac = SpringApplication.run(ExpenseTrackerApplication.class, args);
-		ETService et = ac.getBean(ETService.class);
-
-//		int id = et.register("sri", "sri@mail.com", "123");
-//		System.out.println(id);
-//		et.displayAll();
-
-		int res = et.login("sri@mail.com", "123");
-		System.out.println(res);
-
+		SpringApplication.run(ExpenseTrackerApplication.class, args);
 	}
 
 }
