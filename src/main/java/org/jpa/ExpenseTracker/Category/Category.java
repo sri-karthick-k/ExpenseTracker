@@ -1,10 +1,10 @@
-package org.jpa.ExpenseTracker;
+package org.jpa.ExpenseTracker.Category;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import org.jpa.ExpenseTracker.User;
 
+@Entity
+@Table(name = "category")
 public class Category {
     @Id
     int id;
