@@ -1,13 +1,15 @@
 package org.jpa.ExpenseTracker.Category;
 
 import jakarta.persistence.*;
-import org.jpa.ExpenseTracker.User;
+import org.jpa.ExpenseTracker.User.User;
 
 @Entity
 @Table(name = "category")
 public class Category {
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "c_id")
+    int cID;
 
     @Column
     String name;
@@ -16,12 +18,12 @@ public class Category {
     @JoinColumn(name = "id")
     private User user;
 
-    public int getId() {
-        return id;
+    public int getcID() {
+        return cID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setcID(int cID) {
+        this.cID = cID;
     }
 
     public String getName() {
@@ -43,6 +45,11 @@ public class Category {
     public Category(String name, User user) {
         this.name = name;
         this.user = user;
+    }
+
+    public Category(int cID, String name) {
+        this.cID = cID;
+        this.name = name;
     }
 
     public Category(){}
