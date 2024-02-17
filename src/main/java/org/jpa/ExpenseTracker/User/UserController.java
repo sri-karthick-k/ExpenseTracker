@@ -18,6 +18,7 @@ public class UserController {
 
     @PostMapping ("/register")
     public int register(@RequestBody User request) {
+        // return the username along with status code based on the returned code from register method
         return ets.register(request.getName(), request.getEmail(), request.getPassword());
     }
 
@@ -25,5 +26,6 @@ public class UserController {
     public int login(@RequestBody User request) {
         return ets.login(request.getEmail(), request.getPassword());
     }
+
 
 }

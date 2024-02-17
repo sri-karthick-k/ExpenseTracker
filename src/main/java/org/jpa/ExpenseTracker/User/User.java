@@ -12,7 +12,7 @@ public class User {
     @Column
     String name, email, password;
 
-    public int id() {
+    public int getId() {
         return id;
     }
 

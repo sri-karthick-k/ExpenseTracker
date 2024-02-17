@@ -6,7 +6,7 @@ CREATE TABLE user(
 );
 
 CREATE TABLE category(
-    id int AUTO_INCREMENT primary key,
+    c_id int AUTO_INCREMENT primary key,
     name varchar(255),
     uid int,
     foreign key (uid) references user(id)
