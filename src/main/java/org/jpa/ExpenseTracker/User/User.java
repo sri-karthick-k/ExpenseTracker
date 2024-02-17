@@ -1,4 +1,4 @@
-package org.jpa.ExpenseTracker;
+package org.jpa.ExpenseTracker.User;
 
 import jakarta.persistence.*;
 
