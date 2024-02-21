@@ -17,7 +17,6 @@ public class UserController {
 
     @PostMapping ("/register")
     public RedirectView register(User request) {
-        // return the username along with status code based on the returned code from register method
         int status = ets.register(request.getName(), request.getEmail(), request.getPassword());
         if(status == 1){
             return new RedirectView("/user/dashboard");
