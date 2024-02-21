@@ -2,10 +2,9 @@ package org.jpa.ExpenseTracker.User;
 
 import org.jpa.ExpenseTracker.ETService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -18,15 +17,21 @@ public class UserController {
     }
 
     @PostMapping ("/register")
-    public int register(@RequestBody User request) {
+    public int register(User request) {
         // return the username along with status code based on the returned code from register method
         return ets.register(request.getName(), request.getEmail(), request.getPassword());
     }
 
     @PostMapping("/login")
-    public int login(@RequestBody User request) {
-        return ets.login(request.getEmail(), request.getPassword());
+    public RedirectView login(User request) {
+        int status = ets.login(request.getEmail(), request.getPassword());
+        if (status == 1) {
+            return new RedirectView("/user/dashboard");
+        } else {
+            return new RedirectView("/login?error=true");
+        }
     }
+
 
 
 }
