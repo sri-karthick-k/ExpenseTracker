@@ -2,7 +2,6 @@ package org.jpa.ExpenseTracker.User;
 
 import org.jpa.ExpenseTracker.ETService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -17,9 +16,14 @@ public class UserController {
     }
 
     @PostMapping ("/register")
-    public int register(User request) {
+    public RedirectView register(User request) {
         // return the username along with status code based on the returned code from register method
-        return ets.register(request.getName(), request.getEmail(), request.getPassword());
+        int status = ets.register(request.getName(), request.getEmail(), request.getPassword());
+        if(status == 1){
+            return new RedirectView("/user/dashboard");
+        } else {
+            return new RedirectView("/user/error");
+        }
     }
 
     @PostMapping("/login")
@@ -28,7 +32,7 @@ public class UserController {
         if (status == 1) {
             return new RedirectView("/user/dashboard");
         } else {
-            return new RedirectView("/login?error=true");
+            return new RedirectView("/user/error");
         }
     }
 
