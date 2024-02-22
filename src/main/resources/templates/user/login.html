@@ -1,4 +1,3 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,10 +6,14 @@
 </head>
 <body>
 <h2>Login</h2>
-<form action="/api/v1/user/login" method="post">
-    <input type="email" name="email" placeholder="Email"><br>
-    <input type="password" name="password" placeholder="Password"><br>
+<form id="loginForm" action="/api/v1/user/login" method="post">
+    <input type="email" id="email" name="email" placeholder="Email"><br>
+    <input type="password" id="password" name="password" placeholder="Password"><br>
     <button type="submit">Login</button>
 </form>
+
+<script>
+        localStorage.setItem('userId', 1);
+</script>
 </body>
 </html>
