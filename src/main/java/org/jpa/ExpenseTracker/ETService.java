@@ -1,6 +1,8 @@
 package org.jpa.ExpenseTracker;
 
 import org.jpa.ExpenseTracker.Category.*;
+//import org.jpa.ExpenseTracker.Transaction.Transaction;
+//import org.jpa.ExpenseTracker.Transaction.TransactionRepo;
 import org.jpa.ExpenseTracker.User.User;
 import org.jpa.ExpenseTracker.User.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,12 @@ import java.util.List;
 public class ETService {
     @Autowired
     UserRepo ur;
+
+//    @Autowired
 //    CategoryRepo cr;
+
+//    @Autowired
+//    TransactionRepo tr;
 
     private final CategoryRepo cr;
 
@@ -65,16 +72,13 @@ public class ETService {
     public String addCategory(int u_id, String c_name){
         User user = ur.findById(u_id).orElse(null);
         if(user != null){
-            User u = new User();
-            u.setId(u_id);
-            Category newCategory = new Category(c_name, u);
+            Category newCategory = new Category(c_name, user);
             cr.save(newCategory);
             return "SUCCESS";
         } else {
             return "USER NOT FOUND";
         }
     }
-
     public List<Category> getCategoryUser(int u_id){
         User user = ur.findById(u_id).orElse(null);
         if(user != null){
