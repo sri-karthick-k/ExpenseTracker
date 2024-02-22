@@ -1,0 +1,97 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>User Categories</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>User Categories</h1>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Name</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="category : ${categories}">-->
+<!--        <td th:text="${category.cID}">Category ID</td>-->
+<!--        <td th:text="${category.name}">Category Name</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Categories</title>
+</head>
+<body>
+<h1>User Categories</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.cID}">Category ID</td>
+            <td th:text="${category.name}">Category Name</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Add New Category</h2>
+<form id="addCategoryForm" onsubmit="addCategory(event)">
+    <label for="category_name">Category Name:</label><br>
+    <input type="text" id="category_name" name="category_name"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    function addCategory(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form values
+        // var uid = localStorage.getItem("userId");
+        var uid = 2
+        var categoryName = document.getElementById("category_name").value;
+
+        // Construct JSON payload
+        var payload = {
+            uid: parseInt(uid),
+            category_name: categoryName
+        };
+
+        // Send POST request
+        fetch('/api/v1/category/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'SUCCESS') {
+                window.location.reload();
+                // alert('Category added successfully');
+                // Perform any additional actions upon success, such as updating the UI
+            } else {
+                alert('Failed to add category: ' + data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding category');
+        });
+    }
+</script>
+
+</body>
+</html>
