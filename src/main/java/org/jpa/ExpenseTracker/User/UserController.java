@@ -19,9 +19,9 @@ public class UserController {
     public RedirectView register(User request) {
         int status = ets.register(request.getName(), request.getEmail(), request.getPassword());
         if(status == 1){
-            return new RedirectView("/user/dashboard");
+            return new RedirectView("/cat/2");
         } else {
-            return new RedirectView("/user/error");
+            return new RedirectView("/error");
         }
     }
 
@@ -29,9 +29,9 @@ public class UserController {
     public RedirectView login(User request) {
         int status = ets.login(request.getEmail(), request.getPassword());
         if (status == 1) {
-            return new RedirectView("/user/dashboard");
+            return new RedirectView("/cat/2");
         } else {
-            return new RedirectView("/user/error");
+            return new RedirectView("/error");
         }
     }
 
