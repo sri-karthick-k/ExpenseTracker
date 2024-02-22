@@ -4,14 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-// UserController.java
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/")
 public class UserViewController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "user/login";
     }
     @GetMapping("/register")
     public String registerForm() {
@@ -25,7 +24,7 @@ public class UserViewController {
 
     @GetMapping("/dashboard")
     public String dashboard() {
-        return "index";
+        return "category/userCategories";
     }
 
     @GetMapping("/error")
