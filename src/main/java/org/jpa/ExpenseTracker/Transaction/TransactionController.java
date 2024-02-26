@@ -49,8 +49,13 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{t_id}")
-    public String deleteTransaction(@PathVariable("t_id") int t_id) {
-        return ts.deleteTransaction(t_id);
+    public ResponseEntity<Object> deleteTransaction(@PathVariable("t_id") int t_id) {
+        int result = ts.deleteTransaction(t_id);
+        if(result == 1){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }

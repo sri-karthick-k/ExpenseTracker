@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
+    @Column(name = "t_id")
     int tId;
 
     @Column
@@ -90,5 +90,16 @@ public class Transaction {
         this.category = category;
     }
 
-
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "tId=" + tId +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", date=" + date +
+                ", note='" + note + '\'' +
+                ", user=" + user +
+                ", category=" + category +
+                '}';
+    }
 }

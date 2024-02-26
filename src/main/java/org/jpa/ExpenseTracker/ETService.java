@@ -36,18 +36,22 @@ public class ETService {
 
         User u = new User(name, email, password);
         ur.save(u);
-        return 1;
+        return ur.findByEmailId(email).get(0);
+
     }
 
     public int login(String email, String password){
         List<String> user = ur.findByEmail(email);
+        System.out.println("1: " +user);
         if(!user.isEmpty()){
             List<String> matchedNames = ur.findByEmailAndPassword(email, password);
+            System.out.println("2: " + matchedNames);
             if(!matchedNames.isEmpty()){
                 // return username
-                System.out.println(user.get(0));
+                System.out.println("3: " + matchedNames.get(0));
+                int id = Integer.parseInt(matchedNames.get(0));
                 // Valid credentials
-                return 1;
+                return Integer.parseInt(matchedNames.get(0));
             } else {
                 // Invalid credentials
                 return -1;
@@ -116,12 +120,13 @@ public class ETService {
         }
     }
 
-    public String deleteTransaction(int t_id){
+    public int deleteTransaction(int t_id){
         if(tr.findById(t_id).isPresent()){
+            System.out.println("Deleting...");
             tr.deleteById(t_id);
-            return "Deleted";
+            return 1;
         } else
-            return null;
+            return -1;
     }
 
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Transactions</title>
+</head>
+<body>
+<h2>Upload Transaction</h2>
+<form id="uploadForm" onsubmit="return uploadTransaction(event)">
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required><br>
+
+    <label for="type">Type:</label>
+    <input type="text" id="type" name="type" required><br>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required><br>
+
+    <label for="note">Note:</label>
+    <input type="text" id="note" name="note"><br>
+
+    <label for="categoryId">Category:</label>
+    <select id="categoryId" name="category" required>
+        <option value="">Select category</option>
+        <!-- JavaScript will populate categories here -->
+    </select><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<h1>User Transactions</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Note</th>
+        <th>Category</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="transaction : ${transactions}">
+        <td th:text="${transaction.tId}"></td>
+        <td th:text="${transaction.price}"></td>
+        <td th:text="${transaction.type}"></td>
+        <td th:text="${transaction.date}"></td>
+        <td th:text="${transaction.note}"></td>
+        <td th:text="${transaction.categoryName}"></td>
+
+        <td>
+            <button type="button" th:attr="onclick='deleteTransaction(\'' + ${transaction.tId} + '\')'">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function deleteTransaction(tId) {
+
+        console.log(tId);
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/api/v1/transaction/" + tId, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Reload the page or update UI as needed
+                window.location.reload();
+            } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                console.error("Failed to delete transaction");
+            }
+        };
+        xhr.send();
+    }
+
+    function uploadTransaction(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // var uid = localStorage.getItem("userId");
+        var userId = localStorage.getItem("userId");
+        var categoryId = document.getElementById("categoryId").value;
+        var price = document.getElementById("price").value;
+        var type = document.getElementById("type").value;
+        var date = document.getElementById("date").value;
+        var note = document.getElementById("note").value;
+
+        var formattedDate = new Date(date).toISOString().slice(0, 19).replace("T", " ");
+
+        // Construct JSON payload
+        var payload = {
+            userId: parseInt(userId),
+            categoryId: parseInt(categoryId),
+            price: parseInt(price),
+            type: type,
+            date: formattedDate,
+            note: note
+        };
+
+       fetch('/api/v1/transaction/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Transaction uploaded successfully
+            window.location.reload();
+        } else {
+            console.error("Failed to upload transaction");
+            alert('Failed to upload transaction');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while uploading transaction');
+    });
+
+    // Prevent default form submission
+    return false;
+    }
+
+    var categoryDropdown = document.getElementById("categoryId");
+    var xhrCategories = new XMLHttpRequest();
+    xhrCategories.open("GET", "/api/v1/category/2", true);
+    xhrCategories.onreadystatechange = function () {
+        if (xhrCategories.readyState === 4 && xhrCategories.status === 200) {
+            var categories = JSON.parse(xhrCategories.responseText);
+            categories.forEach(function(category) {
+                var option = document.createElement("option");
+                option.value = category.cID;
+                option.textContent = category.name;
+                categoryDropdown.appendChild(option);
+            });
+        } else if (xhrCategories.readyState === 4 && xhrCategories.status !== 200) {
+            console.error("Failed to fetch categories");
+        }
+    };
+    xhrCategories.send();
+
+</script>
+</body>
+</html>
