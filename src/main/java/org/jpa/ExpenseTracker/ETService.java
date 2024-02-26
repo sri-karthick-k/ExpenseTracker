@@ -11,6 +11,7 @@ import org.jpa.ExpenseTracker.User.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -94,6 +95,33 @@ public class ETService {
             return tr.findTransactionsByUserId(u_id);
         }
         return null;
+    }
+
+    public String addNewTransaction(int u_id, int c_id, int price, String type, Timestamp date, String note){
+        User user = ur.findById(u_id).orElse(null);
+        Category category = cr.findById(c_id).orElse(null);
+
+        if(user != null && category != null){
+            Transaction t = new Transaction();
+            t.setCategory(category);
+            t.setUser(user);
+            t.setDate(date);
+            t.setPrice(price);
+            t.setNote(note);
+            t.setType(type);
+            tr.save(t);
+            return "Success";
+        } else {
+            return "Category or user not found!";
+        }
+    }
+
+    public String deleteTransaction(int t_id){
+        if(tr.findById(t_id).isPresent()){
+            tr.deleteById(t_id);
+            return "Deleted";
+        } else
+            return null;
     }
 
 
