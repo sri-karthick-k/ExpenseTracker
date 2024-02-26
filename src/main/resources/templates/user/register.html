@@ -7,11 +7,39 @@
 </head>
 <body>
 <h2>Register</h2>
-<form action="/api/v1/user/register" method="post">
+<form id="registerForm" action="/api/v1/user/register" method="post">
     <input type="text" name="name" placeholder="Name"><br>
     <input type="email" name="email" placeholder="Email"><br>
     <input type="password" name="password" placeholder="Password"><br>
     <button type="submit">Register</button>
 </form>
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Submit the form using fetch
+        fetch(this.action, {
+            method: this.method,
+            body: new FormData(this)
+        })
+        .then(response => {
+            // Check if the response indicates success (status code 200-299)
+            if (response.ok) {
+                // Redirect to the login page
+                window.location.href = "/login";
+            } else {
+                // Handle the case where registration failed
+                alert("Registration failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            // Handle network errors or other issues
+            console.error("Error occurred during registration:", error);
+            alert("An error occurred. Please try again later.");
+        });
+    });
+</script>
+
 </body>
 </html>
