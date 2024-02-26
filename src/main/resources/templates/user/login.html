@@ -45,7 +45,7 @@
                 alert('Invalid credentials');
             } else {
                 localStorage.setItem('userId', userId);
-                window.location.href = '/dashboard';
+                window.location.href = '/cat/' + userId;
             }
         })
         .catch(error => {
