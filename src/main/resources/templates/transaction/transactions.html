@@ -2,59 +2,132 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>User Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 <body>
-<h2>Upload Transaction</h2>
-<form id="uploadForm" onsubmit="return uploadTransaction(event)">
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required><br>
+<!--<h2>Upload Transaction</h2>-->
+<!--<form id="uploadForm" onsubmit="return uploadTransaction(event)">-->
+<!--    <label for="price">Price:</label>-->
+<!--    <input type="number" id="price" name="price" required><br>-->
 
-    <label for="type">Type:</label>
-    <input type="text" id="type" name="type" required><br>
+<!--    <label for="type">Type:</label>-->
+<!--    <input type="text" id="type" name="type" required><br>-->
 
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="date" required><br>
+<!--    <label for="date">Date:</label>-->
+<!--    <input type="date" id="date" name="date" required><br>-->
 
-    <label for="note">Note:</label>
-    <input type="text" id="note" name="note"><br>
+<!--    <label for="note">Note:</label>-->
+<!--    <input type="text" id="note" name="note"><br>-->
 
-    <label for="categoryId">Category:</label>
-    <select id="categoryId" name="category" required>
-        <option value="">Select category</option>
-        <!-- JavaScript will populate categories here -->
-    </select><br>
+<!--    <label for="categoryId">Category:</label>-->
+<!--    <select id="categoryId" name="category" required>-->
+<!--        <option value="">Select category</option>-->
+<!--        &lt;!&ndash; JavaScript will populate categories here &ndash;&gt;-->
+<!--    </select><br>-->
 
-    <button type="submit">Submit</button>
-</form>
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
 
-<h1>User Transactions</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Price</th>
-        <th>Type</th>
-        <th>Date</th>
-        <th>Note</th>
-        <th>Category</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="transaction : ${transactions}">
-        <td th:text="${transaction.tId}"></td>
-        <td th:text="${transaction.price}"></td>
-        <td th:text="${transaction.type}"></td>
-        <td th:text="${transaction.date}"></td>
-        <td th:text="${transaction.note}"></td>
-        <td th:text="${transaction.categoryName}"></td>
+<!--<h1>User Transactions</h1>-->
+<!--<table border="1">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Price</th>-->
+<!--        <th>Type</th>-->
+<!--        <th>Date</th>-->
+<!--        <th>Note</th>-->
+<!--        <th>Category</th>-->
+<!--        <th>Action</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="transaction : ${transactions}">-->
+<!--        <td th:text="${transaction.tId}"></td>-->
+<!--        <td th:text="${transaction.price}"></td>-->
+<!--        <td th:text="${transaction.type}"></td>-->
+<!--        <td th:text="${transaction.date}"></td>-->
+<!--        <td th:text="${transaction.note}"></td>-->
+<!--        <td th:text="${transaction.categoryName}"></td>-->
 
-        <td>
-            <button type="button" th:attr="onclick='deleteTransaction(\'' + ${transaction.tId} + '\')'">Delete</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<!--        <td>-->
+<!--            <button type="button" th:attr="onclick='deleteTransaction(\'' + ${transaction.tId} + '\')'">Delete</button>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<div class="container">
+    <div class="card bg-secondary text-white p-4 m-5 rounded">
+        <h2>Upload Transaction</h2>
+        <form id="uploadForm" onsubmit="return uploadTransaction(event)">
+            <div class="mb-3">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="type" class="form-label">Type:</label>
+                <select class="form-select" id="type" name="type" required>
+                    <option value="">Select type</option>
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                </select>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="note" class="form-label">Note:</label>
+                <input type="text" class="form-control" id="note" name="note">
+            </div>
+
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Category:</label>
+                <select class="form-select" id="categoryId" name="category" required>
+                    <option value="">Select category</option>
+                    <!-- JavaScript will populate categories here -->
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>        </form>
+    </div>
+    <div class="card bg-secondary text-white p-4 m-5 rounded">
+        <h2>User Transactions</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Note</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.tId}"></td>
+                <td th:text="${transaction.price}"></td>
+                <td th:text="${transaction.type}"></td>
+                <!--            <td th:text="${transaction.date}"></td>-->
+                <td th:text="${#dates.format(transaction.date, 'yyyy-MM-dd')}"></td>
+                <td th:text="${transaction.note}"></td>
+                <td th:text="${transaction.categoryName}"></td>
+                <td>
+                    <button type="button" class="btn btn-danger" th:attr="onclick='deleteTransaction(\'' + ${transaction.tId} + '\')'">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
     function deleteTransaction(tId) {
@@ -123,7 +196,8 @@
 
     var categoryDropdown = document.getElementById("categoryId");
     var xhrCategories = new XMLHttpRequest();
-    xhrCategories.open("GET", "/api/v1/category/2", true);
+    var userId = parseInt(localStorage.getItem("userId"));
+    xhrCategories.open("GET", "/api/v1/category/" + userId, true);
     xhrCategories.onreadystatechange = function () {
         if (xhrCategories.readyState === 4 && xhrCategories.status === 200) {
             var categories = JSON.parse(xhrCategories.responseText);
